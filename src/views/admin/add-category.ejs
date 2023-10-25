@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center">
+  <h2 class="page-title">add new category</h2>
+  <a href="/admin/categories" class="btn btn-primary">back</a>
+</div>
+<br />
+
+<form method="POST" action="/admin/categories/add-category">
+  <div class="row mb-3">
+    <label for="title">category name</label>
+    <input type="text" class="form-control" id="title" name="title" />
+  </div>
+  <button class="btn btn-primary" type="submit">add category</button>
+</form>
+
+<%- include('../partials/footer') %>
