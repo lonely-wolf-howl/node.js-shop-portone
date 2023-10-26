@@ -3,7 +3,7 @@ const app = express();
 
 const Connect = require('./database/connect');
 const path = require('path');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
@@ -51,27 +51,19 @@ class Application {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    // cookie-session
+    // express-session
     app.use(
-      cookieSession({
-        name: 'cookie-session',
-        keys: [process.env.COOKIE_ENCRYPTION_KEY],
+      session({
+        secret: process.env.SESSION_SECRET_KEY,
+        cookie: {
+          httpOnly: true,
+          secure: false,
+        },
+        name: 'node.js-shop-cookie',
+        resave: false,
+        saveUninitialized: false,
       })
     );
-
-    app.use(function (req, res, next) {
-      if (req.session && !req.session.regenerate) {
-        req.session.regenerate = (callback) => {
-          callback();
-        };
-      }
-      if (req.session && !req.session.save) {
-        req.session.save = (callback) => {
-          callback();
-        };
-      }
-      next();
-    });
 
     // passport
     app.use(passport.initialize());
