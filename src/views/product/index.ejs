@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<div class="row">
+  <h1><%= product.title %></h1>
+  <div class="col-xs-12 col-md-5">
+    <img
+      style="width: 80%"
+      src="/product-images/<%= product.id %>/<%= product.image %>"
+      alt="product"
+    />
+  </div>
+  <div class="col-xs-12 col-md-7">
+    <p>description: <%= product.desc %></p>
+    <p>price: <%= product.price %>₩</p>
+    <% if (currentUser) { %>
+    <form action="/cart/<%= product.slug %>" method="POST">
+      <button class="btn btn-primary" role="button">add to cart</button>
+    </form>
+    <% } else { %>
+    <p>you need to login first.</p>
+    <% } %>
+  </div>
+
+  <div class="col-xs-12 col-md-5">
+    <div class="d-flex">
+      <% galleryImages.forEach(image => { %>
+        <% if (image !== 'thumbs') { %>
+      <div>
+        <a>
+          <img
+            style="width: 100%"
+            src="/product-images/<%= product.id %>/gallery/thumbs/<%= image %>"
+            alt="product"
+          />
+        </a>
+      </div>
+      <% }}) %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
