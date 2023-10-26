@@ -64,7 +64,42 @@
   </tbody>
 </table>
 <% } else { %>
-  <h3>nothing in cart.</h3>
-<% } %> 
+<h3>nothing in cart.</h3>
+<% } %>
+
+<script>
+  IMP.init('imp74328407');
+
+  function requestPay() {
+    IMP.request_pay(
+      {
+        pg: '...',
+        pay_method: '...',
+        merchant_uid: '...',
+        name: '...',
+        amount: 0,
+        buyer_email: '...',
+        buyer_name: '...',
+        buyer_tel: '...',
+        buyer_addr: '...',
+        buyer_postcode: '...',
+      },
+      function (rsp) {
+        if (rsp.success) {
+          console.log('success', rsp);
+          fetch('/cart/complete-order')
+            .then((res) => {
+              location.reload();
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          console.log('error', rsp);
+        }
+      }
+    );
+  }
+</script>
 
 <%- include('../partials/footer') %>

@@ -103,4 +103,14 @@ router.delete('/', (req, res, next) => {
   }
 });
 
+router.get('/complete-order', (req, res, next) => {
+  try {
+    delete req.session.cart;
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;
