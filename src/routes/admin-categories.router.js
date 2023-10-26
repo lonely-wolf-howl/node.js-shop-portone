@@ -1,15 +1,15 @@
 const express = require('express');
-const adminCategoriesRouter = express.Router();
+const router = express.Router();
 
 const { checkAdmin } = require('../middleware/auth');
 
 const Category = require('../models/categories.model');
 
-adminCategoriesRouter.get('/add-category', checkAdmin, (req, res) => {
+router.get('/add-category', checkAdmin, (req, res) => {
   res.render('admin/add-category');
 });
 
-adminCategoriesRouter.post(
+router.post(
   '/add-category',
   checkAdmin,
   async (req, res, next) => {
@@ -37,7 +37,7 @@ adminCategoriesRouter.post(
   }
 );
 
-adminCategoriesRouter.get('/', checkAdmin, async (req, res, next) => {
+router.get('/', checkAdmin, async (req, res, next) => {
   try {
     const categories = await Category.find({});
     res.render('admin/categories', {
@@ -49,10 +49,10 @@ adminCategoriesRouter.get('/', checkAdmin, async (req, res, next) => {
   }
 });
 
-adminCategoriesRouter.delete('/:id', checkAdmin, async (req, res, next) => {
+router.delete('/:id', checkAdmin, async (req, res, next) => {
   try {
     await Category.findByIdAndRemove(req.params.id);
-    req.flash('success', 'Categories deleted successfully.');
+    req.flash('success', 'Categories removed successfully.');
     res.redirect('/admin/categories');
   } catch (error) {
     console.error(error);
@@ -60,4 +60,4 @@ adminCategoriesRouter.delete('/:id', checkAdmin, async (req, res, next) => {
   }
 });
 
-module.exports = adminCategoriesRouter;
+module.exports = router;

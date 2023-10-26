@@ -1,18 +1,18 @@
 const express = require('express');
-const mainRouter = express.Router();
+const router = express.Router();
 
 const { checkNotAuthenticated } = require('../middleware/auth');
 
-mainRouter.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.redirect('/products');
 });
 
-mainRouter.get('/signup', checkNotAuthenticated, (req, res) => {
+router.get('/signup', checkNotAuthenticated, (req, res) => {
   res.render('auth/signup');
 });
 
-mainRouter.get('/login', checkNotAuthenticated, (req, res) => {
+router.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('auth/login');
 });
 
-module.exports = mainRouter;
+module.exports = router;

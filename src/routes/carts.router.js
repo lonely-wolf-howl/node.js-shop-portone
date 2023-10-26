@@ -1,4 +1,4 @@
 const express = require('express');
-const cartsRouter = express.Router();
+const router = express.Router();
 
-module.exports = cartsRouter;
+module.exports = router;

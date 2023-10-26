@@ -7,6 +7,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
+const fileUpload = require('express-fileupload');
 
 // import routers
 const mainRouter = require('./routes/main.router');
@@ -82,6 +83,9 @@ class Application {
 
     // method-override
     app.use(methodOverride('_method'));
+
+    // express-fileupload
+    app.use(fileUpload());
 
     app.use((req, res, next) => {
       res.locals.error = req.flash('error');

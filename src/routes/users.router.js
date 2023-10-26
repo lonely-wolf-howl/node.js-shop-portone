@@ -1,5 +1,5 @@
 const express = require('express');
-const usersRouter = express.Router();
+const router = express.Router();
 
 const passport = require('passport');
 
@@ -8,7 +8,7 @@ const sendEmail = require('../mail/mail');
 const User = require('../models/users.model');
 
 // signup
-usersRouter.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
   const user = new User(req.body);
   try {
     await user.save();
@@ -20,7 +20,7 @@ usersRouter.post('/signup', async (req, res) => {
 });
 
 // login
-usersRouter.post('/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   passport.authenticate('local', (error, user, info) => {
     if (error) return next(error);
     if (!user) return res.json({ message: info });
@@ -33,8 +33,8 @@ usersRouter.post('/login', (req, res, next) => {
 });
 
 // google login
-usersRouter.get('/google', passport.authenticate('google'));
-usersRouter.get(
+router.get('/google', passport.authenticate('google'));
+router.get(
   '/google/callback',
   passport.authenticate('google', {
     successReturnToOrRedirect: '/products',
@@ -43,8 +43,8 @@ usersRouter.get(
 );
 
 // kakao login
-usersRouter.get('/kakao', passport.authenticate('kakao'));
-usersRouter.get(
+router.get('/kakao', passport.authenticate('kakao'));
+router.get(
   '/kakao/callback',
   passport.authenticate('kakao', {
     successReturnToOrRedirect: '/',
@@ -53,11 +53,11 @@ usersRouter.get(
 );
 
 // logout
-usersRouter.post('/logout', (req, res, next) => {
+router.post('/logout', (req, res, next) => {
   req.logout(function (error) {
     if (error) return next(error);
     res.redirect('/');
   });
 });
 
-module.exports = usersRouter;
+module.exports = router;
