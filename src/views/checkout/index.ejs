@@ -1,0 +1,70 @@
+<%- include('../partials/header') %> <% if (cart && cart.length > 0) { %>
+
+<h1>cart</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">image</th>
+      <th scope="col">name</th>
+      <th scope="col">price</th>
+      <th scope="col">quantity</th>
+      <th scope="col">change</th>
+      <th scope="col">price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% let total = 0 %>
+    <% cart.forEach(product => { %>
+      <% let sub = product.quantity * product.price %>
+      <% total += sub %>
+    <tr>
+      <td>
+        <img style="width: 100px" src="<%= product.image %>" alt="product" />
+      </td>
+      <td><%= product.title %></td>
+      <td><%= product.price %></td>
+      <td><%= product.quantity %></td>
+      <td>
+        <a
+          class="btn btn-primary"
+          href="/carts/update/<%= product.title %>?action=add"
+          >+</a
+        >&nbsp;
+        <a
+          class="btn btn-danger"
+          href="/carts/update/<%= product.title %>?action=sub"
+          >-</a
+        >&nbsp;
+        <a
+          class="btn btn-secondary"
+          href="/carts/update/<%= product.title %>?action=remove"
+          >X</a
+        >&nbsp;
+      </td>
+      <td><%= sub %>₩</td>
+    </tr>
+    <% }) %>
+    <tr>
+      <td colspan="5"></td>
+      <td><b>total price:</b> <%= total %>₩</td>
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+      <td>
+        <form action="/carts?_method=DELETE" method="POST">
+          <button class="clearcart btn btn-danger">remove all</button>
+        </form>
+      </td>
+      <td>
+        <a class="btn btn-primary buyout" onclick="requestPay()">checkout</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<% } else { %>
+  <h3>nothing in cart.</h3>
+<% } %> 
+
+<%- include('../partials/footer') %>

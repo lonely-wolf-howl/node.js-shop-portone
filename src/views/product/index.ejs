@@ -13,7 +13,7 @@
     <p>description: <%= product.desc %></p>
     <p>price: <%= product.price %>₩</p>
     <% if (currentUser) { %>
-    <form action="/cart/<%= product.slug %>" method="POST">
+    <form action="/carts/<%= product.slug %>" method="POST">
       <button class="btn btn-primary" role="button">add to cart</button>
     </form>
     <% } else { %>
